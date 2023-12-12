@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="weather-container">
+    <h1>Weather App</h1>
+    <div class="weather-info">
+      <p>City: <span id="city"></span></p>
+      <p>Temperature: <span id="temperature"></span>&deg;C</p>
+      <p>Weather: <span id="weather"></span></p>
+      <p>Description: <span id="description"></span></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.weather-container {
+  width: 80%;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info {
+  font-size: 18px;
+}
+
+.weather-info p {
+  margin: 5px 0;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const apiKey = 'YOUR_API_KEY';
+  const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=London&units=metric&appid=' + apiKey;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('city').textContent = data.name;
+      document.getElementById('temperature').textContent = data.main.temp;
+      document.getElementById('weather').textContent = data.weather[0].main;
+      document.getElementById('description').textContent = data.weather[0].description;
+    })
+    .catch(error => {
+      console.log('Error fetching weather data:', error);
+    });
+});
+
